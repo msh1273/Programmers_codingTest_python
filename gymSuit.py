@@ -8,7 +8,6 @@ def solution(n, lost, reserve):
     # 두 리스트의 서로 중복되는 부분 제거
     setLost = list(set(lost) - set(reserve))
     setReserve = list(set(reserve) - set(lost))
-    popLost = setLost   # 최종 잃어버린 학생을 담을 리스트
     for i in setReserve:
             if (i-1 in setLost):
                 setLost.remove(i-1)
