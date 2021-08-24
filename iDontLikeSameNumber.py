@@ -1,4 +1,7 @@
-arr = [3,3]
+from sys import path_importer_cache
+
+
+arr = [1]
 
 # 첫번째 인덱스 값을 answer에 넣는다.
 # 다음 값과 비교하여 같다면 넣지않고 같지않다면 추가한다.
@@ -24,4 +27,12 @@ def solution(arr):
                 answer.append(arr[j])
         return answer
 
-print(solution(arr))
+# 두번째 방법 (result[-1]은 항상 배열의 마지막을 가르킨다.)
+def solution1(arr):
+    result = []
+    for val in arr:
+        if (len(result) == 0) or (result[-1] != val):
+            result.append(val)
+    return result
+
+print(solution1(arr))
