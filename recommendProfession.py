@@ -10,7 +10,6 @@ languages = ["JAVA", "JAVASCRIPT"]
 
 preference = [7, 5]
 # table을 2차원 배열로 만든다. (각 행의 0번째에는 직군이 있음)
-# 개발자 언어 선호도를 dict타입으로 저장한다.
 # 직업군 언어 점수 리스트를 생성한다.
 def solution(table, languages, preference):
     answer = []
