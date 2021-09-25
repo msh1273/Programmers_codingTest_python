@@ -1,4 +1,4 @@
-s = "ab"
+s = "aabbaccc"
 
 def solution(s):
     answer = []
@@ -31,7 +31,7 @@ def cutString(n, s):
             c_list.append(count)
         k += 1
 
-    print(c_list)
+    print("c_list:", c_list)
 
     ansList = []
     ansList.append(result[0])
@@ -47,8 +47,8 @@ def cutString(n, s):
             fullAns.append(ansList[i])
 
     answer = "".join(fullAns)
-    print(ansList)
+    print("ansList:", ansList)
     print(answer)
     return len(answer)
 
-print(solution(s))
+print(cutString(2, s))
