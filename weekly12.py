@@ -8,11 +8,11 @@ def solution(k, dungeons):
     allCase = list(permutations(dungeons, len(dungeons)))
 
     for i in allCase:
-        k=80
+        tempk=k
         count = 0
         for need, use in i:
-            if k >= need and k >=use:   #던전을 돌 피로도가 남아있고 소모피로도도 남아있음
-                k -= use
+            if tempk >= need and tempk >=use:   #던전을 돌 피로도가 남아있고 소모피로도도 남아있음
+                tempk -= use
                 count += 1
             else:
                 break
