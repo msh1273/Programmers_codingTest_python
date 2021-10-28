@@ -1,4 +1,5 @@
 from collections import deque
+import copy
 
 game_board = [
     [1,1,0,0,1,0],
@@ -19,9 +20,6 @@ table = [
     ]
 
 moves = [(-1,0), (1,0), (0,-1), (0,1)]  # 상, 하, 좌, 우
-def solution(game_board, table):
-    answer = -1
-    return answer
 
 visited = [[0 for col in range(6)] for row in range(6)]
 gameResult = []
@@ -82,13 +80,17 @@ for i in range(len(tableResult)):
         tableshape.append(tableResult[j:i])
         j = i+1
 
-# 도형의 시작위치를 0,0으로 만들기 위한 함수
+# 도형의 시작위치를 동일하게 만들기 위한 함수
 def format00(shape):
     temp = []
-    tmp_x = shape[0][0]
-    tmp_y = shape[0][1]
+    min_x = len(table)
+    min_y = len(table)
+    for i in shape:
+        min_x = min(min_x, i[0])
+        min_y = min(min_y, i[1])
+
     for x, y in shape:
-        temp.append((x-tmp_x, y-tmp_y))
+        temp.append((x-min_x, y-min_y))
     return sorted(temp)
 
 formattedGameShape = []
@@ -102,17 +104,39 @@ for i in tableshape:
 
 # 도형을 90도씩 돌리는 경우
 def rotate90(shape):
-    rotate = [[0, 1], [-1,0]]
     temp = []
+    n = len(table)
     for i in shape:
-        temp.append([i[0]*rotate[0][0] + i[1] * rotate[0][1], i[0]*rotate[1][0]+i[1]*rotate[1][1]])
-    return temp
+        temp.append((i[1], (n-1-i[0])))
+    return sorted(format00(temp))
 
-print('보드에 맞춰야 하는 퍼즐', formattedGameShape)
-print(formattedTableShape)
+print('보드에 맞춰야 하는 퍼즐 \n', formattedGameShape)
+print('테이블에 있는 퍼즐 \n', formattedTableShape)
+print()
+ans = []
+gameflag = [False]*len(formattedGameShape)
 
-count = 0
-for i in formattedTableShape:
-    for j in formattedTableShape:
-        if i == j:
-            formattedTableShape.pop()
+for i in range(len(formattedGameShape)):
+    if formattedGameShape[i] in formattedTableShape and gameflag[i] == False:
+        gameflag[i] = True
+        formattedTableShape.remove(formattedGameShape[i])
+        ans.append(formattedGameShape[i])
+    elif gameflag[i] == False:
+        tmp_shape = copy.deepcopy(formattedGameShape[i])
+        for _ in range(4):
+            tmp_shape = rotate90(tmp_shape)
+            if tmp_shape in formattedTableShape and gameflag[i] == False:
+                gameflag[i] = True
+                formattedTableShape.remove(tmp_shape)
+                ans.append(formattedGameShape[i])
+
+fillCount = 0
+for i in ans:
+    fillCount += len(i)
+
+
+def solution(game_board, table, fillcount):
+    answer = -1
+    return answer
+
+print(fillCount)
